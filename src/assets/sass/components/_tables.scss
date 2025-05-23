@@ -1,0 +1,166 @@
+table {
+  tr {
+    &:hover {
+      background-color: #f8f8f8;
+    }
+
+    td {
+      .pi {
+        font-size: 1.4rem !important;
+
+        &.pi-spinner {
+          font-size: 2rem !important;
+        }
+      }
+
+      .action-toggle-position {
+        left: -3rem;
+        top: -10.5rem;
+      }
+    }
+
+    th {
+      &.filter-th {
+        padding: 1rem 0 !important;
+        background: unset;
+        background-color: transparent;
+      }
+    }
+  }
+
+  &.vgt-table {
+    font-size: 1.6rem !important;
+  }
+}
+
+.vgt-wrap__footer {
+  .footer__navigation__page-btn {
+    .chevron {
+      &.right {
+        &::after {
+          border-left: 6px solid $color-primary !important;
+        }
+      }
+    }
+    .chevron {
+      &.left {
+        &::after {
+          border-right: 6px solid $color-primary !important;
+        }
+      }
+    }
+  }
+}
+
+.vgt-input,
+.vgt-select {
+  &:focus {
+    border-color: $color-primary !important;
+  }
+}
+
+.vgt-input,
+.vgt-select {
+  font-size: 1.4rem !important;
+}
+
+.vgt-select {
+  padding: 0 !important;
+  width: 95% !important;
+}
+
+.vgt-table {
+  thead {
+    th {
+      &.sortable {
+        button {
+          &::after {
+            border-bottom: 5px solid #c1c1c1;
+          }
+        }
+      }
+      &.sortable {
+        button {
+          &::before {
+            border-top: 5px solid #c1c1c1;
+          }
+        }
+      }
+
+      &.sorting-asc {
+        button {
+          &::after {
+            border-bottom: 5px solid $color-primary !important;
+          }
+        }
+      }
+      &.sorting-desc {
+        button {
+          &::before {
+            border-top: 5px solid $color-primary !important;
+          }
+        }
+      }
+    }
+  }
+}
+
+form {
+  table {
+    tr {
+      &:hover {
+        background-color: #fff;
+      }
+      th {
+        &.w-36 {
+          width: 36rem !important;
+        }
+      }
+      td {
+        padding: 0 1rem 1rem 0;
+      }
+    }
+  }
+}
+
+.vgt-responsive {
+  // scrollbar
+  &::-webkit-scrollbar {
+    width: 5px;
+  }
+
+  &::-webkit-scrollbar-button {
+    display: none;
+  }
+
+  /* Track */
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  /* Handle */
+  &::-webkit-scrollbar-thumb {
+    background: $color-secondary;
+    border-radius: 5px;
+  }
+
+  /* Handle on hover */
+  &::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
+}
+
+@include responsive(tablet-portrait) {
+  .vgt-wrap {
+    max-width: 88vw;
+    overflow-x: scroll;
+  }
+
+  .vgt-fixed-header {
+    .vgt-table {
+      thead {
+        display: none;
+      }
+    }
+  }
+}

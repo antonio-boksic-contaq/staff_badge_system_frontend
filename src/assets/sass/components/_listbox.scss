@@ -1,0 +1,39 @@
+.listbox {
+  li {
+    &:hover {
+      background-color: #f4f4f4;
+    }
+
+    &.active {
+      background-color: #cecece;
+    }
+
+    padding: 0.3rem 0rem;
+    cursor: pointer;
+  }
+
+  // scrollbar
+  &::-webkit-scrollbar {
+    width: 5px;
+  }
+
+  &::-webkit-scrollbar-button {
+    display: none;
+  }
+
+  /* Track */
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  /* Handle */
+  &::-webkit-scrollbar-thumb {
+    background: $color-secondary;
+    border-radius: 5px;
+  }
+
+  /* Handle on hover */
+  &::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
+}

@@ -1,0 +1,25 @@
+.vs {
+  &__selected-options {
+    padding-top: 0.4rem;
+    padding-bottom: 0.4rem;
+  }
+
+  &__selected {
+    background-color: #eeeeee !important;
+  }
+
+  &__search {
+    font-size: 1.5rem;
+    &:focus {
+      font-size: 1.5rem;
+    }
+  }
+
+  &__dropdown-option {
+    &--selected {
+      color: #f0f0f0 !important;
+      background-color: #b6b6b6 !important;
+      cursor: default;
+    }
+  }
+}

@@ -1,0 +1,15 @@
+.filters {
+  margin-bottom: 2rem;
+
+  .vs__dropdown-toggle {
+    background-color: #fff;
+  }
+
+  .vs__selected {
+    background-color: #fff !important;
+  }
+
+  @include responsive(tablet-portrait) {
+    max-width: 90vw;
+  }
+}

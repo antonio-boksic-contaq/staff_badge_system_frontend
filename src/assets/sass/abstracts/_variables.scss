@@ -1,0 +1,36 @@
+/* General */
+$fontSize: 62.5%;
+$borderRadius: 12px;
+$transitionDuration: 0.2s;
+
+/* Color */
+$color-primary: #005191;
+$color-red: #e42313;
+$color-success: #22c55e;
+$color-secondary: #b7b7b7;
+$color-info: #3b82f6;
+$color-warning: #f59e0b;
+$color-danger: #ef4444;
+
+/* Color arrays */
+$colors: (
+  "primary": #055392,
+  "secondary": #b7b7b7,
+  "red": #e42313,
+  "danger": #ef4444,
+  "alert-danger": #ffe7e6,
+  "warning": #f59e0b,
+  "info": #3b82f6,
+  "success": #22c55e,
+);
+
+@each $color, $hex in $colors {
+  .text-#{$color} {
+    color: #{$hex} !important;
+  }
+
+  .bg-#{$color} {
+    background-color: #{$hex} !important;
+    color: #fff !important;
+  }
+}

@@ -1,0 +1,38 @@
+.login {
+  width: 48rem;
+  height: 48rem;
+  position: relative;
+  form {
+    span {
+      i {
+        top: 40%;
+      }
+
+      &.p-input-icon-left {
+        .p-inputtext {
+          padding-left: 3rem;
+        }
+      }
+
+      &.p-input-icon-right {
+        .p-inputtext {
+          padding-right: 3rem;
+        }
+      }
+    }
+
+    input {
+      font-size: 1.5rem;
+      padding: 1rem;
+      -webkit-transition: all 0.2s ease-out;
+      -moz-transition: all 0.2s ease-out;
+      -ms-transition: all 0.2s ease-out;
+      -o-transition: all 0.2s ease-out;
+      transition: all 0.2s ease-out;
+
+      &:focus {
+        border: 1px solid $color-primary;
+      }
+    }
+  }
+}

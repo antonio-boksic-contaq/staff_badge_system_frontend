@@ -1,0 +1,34 @@
+.dropzone {
+  &-clickable {
+    cursor: pointer !important;
+
+    * {
+      cursor: pointer !important;
+    }
+  }
+
+  &__box {
+    border: 2px dashed $color-primary !important;
+    height: 90%;
+  }
+
+  &__message {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+.modal-container {
+  &.success {
+    .modal-content {
+      .dropzone {
+        border: 2px dashed $color-success !important;
+      }
+    }
+  }
+}
+
+.gg-close {
+  color: $color-danger;
+}

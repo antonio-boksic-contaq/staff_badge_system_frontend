@@ -1,0 +1,48 @@
+.tags {
+  display: inline-block;
+  padding: 0.2rem 0.3rem;
+  margin-right: 0.5rem;
+  background-color: $color-secondary;
+  color: white;
+  border-radius: 0.5rem;
+  width: max-content;
+  font-size: 1.1rem;
+  font-weight: 500;
+
+  &-rounded {
+    border-radius: 1rem;
+    width: 2rem;
+    height: 2rem;
+    text-align: center;
+    background-color: #fff;
+  }
+
+  .pi {
+    font-size: 1rem !important;
+  }
+
+  &-primary {
+    background-color: $color-primary;
+    color: white;
+  }
+
+  &-success {
+    background-color: $color-success;
+    color: white;
+  }
+
+  &-warning {
+    background-color: $color-warning;
+    color: white;
+  }
+
+  &-info {
+    background-color: $color-info;
+    color: white;
+  }
+
+  &-danger {
+    background-color: $color-danger;
+    color: white;
+  }
+}

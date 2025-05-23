@@ -1,0 +1,37 @@
+.confirm {
+  &-container {
+    width: 40%;
+    position: fixed;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transition: all 0.5s;
+    text-align: center;
+
+    h2 {
+      font-size: 2rem;
+      text-transform: uppercase;
+      font-weight: 500;
+      width: 100%;
+      text-align: center;
+    }
+
+    @include responsive(tablet-portrait) {
+      width: 80%;
+
+      h2 {
+        font-size: 1.5rem !important;
+      }
+    }
+  }
+
+  &-header {
+    button {
+      &:active,
+      &:focus {
+        border-color: 0 !important;
+        box-shadow: 0 0 0 0 !important;
+      }
+    }
+  }
+}

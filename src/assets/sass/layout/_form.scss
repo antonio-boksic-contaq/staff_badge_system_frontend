@@ -1,0 +1,108 @@
+form {
+  h2 {
+    padding: 1rem;
+    background: linear-gradient(90deg, #f3f4f7, #fbfbfb);
+    border-radius: 2px;
+  }
+
+  &.store {
+    h2 {
+      border-bottom: 3px solid $color-primary;
+
+      i {
+        color: $color-primary;
+      }
+    }
+
+    label {
+      color: $color-primary;
+    }
+  }
+
+  &.update {
+    h2 {
+      border-bottom: 3px solid $color-success;
+      color: #0e0e0e !important;
+
+      i {
+        color: $color-success;
+      }
+    }
+
+    label {
+      color: $color-success;
+    }
+
+    input {
+      &.p-inputtext {
+        &:focus {
+          box-shadow: 0 0 0 1px $color-success !important;
+          border-color: $color-success !important;
+        }
+      }
+    }
+
+    textarea {
+      &.p-inputtextarea {
+        &:focus {
+          box-shadow: 0 0 0 1px $color-success !important;
+          border-color: $color-success !important;
+        }
+      }
+    }
+
+    .p-inputswitch {
+      &.p-focus {
+        .p-inputswitch-slider {
+          box-shadow: 0 0 0 2px $color-success !important;
+        }
+      }
+      &.p-inputswitch-checked {
+        .p-inputswitch-slider {
+          background-color: $color-success !important;
+        }
+      }
+    }
+
+    .vs__dropdown-toggle {
+      &:focus {
+        box-shadow: 0 0 0 1px $color-success !important;
+        border-color: $color-success !important;
+      }
+    }
+  }
+
+  input {
+    &[type="file"] {
+      &::file-selector-button {
+        font-weight: 400;
+        cursor: pointer;
+        border: 0;
+        padding: 0.2em 0.4em;
+        border-radius: 0.2em;
+        background-color: #f3f4f7;
+        border: 1px solid #b9b9b9;
+        transition: all 0.3s;
+
+        &:hover {
+          border: 1px solid #f3f4f7;
+          background-color: #b9b9b9;
+        }
+      }
+    }
+  }
+
+  &.internalTrainingSession,
+  &.AssetAssignment {
+    .pi {
+      font-size: 1.3rem;
+    }
+
+    .candidate,
+    .assignment {
+      .v-select {
+        max-width: 38rem !important;
+      }
+    }
+  }
+}

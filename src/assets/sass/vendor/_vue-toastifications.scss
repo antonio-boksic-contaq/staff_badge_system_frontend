@@ -1,0 +1,26 @@
+/* Override toast */
+$vt-color-default: #055392 !default;
+$vt-color-info: #3b82f6 !default;
+$vt-color-success: #22c55e !default;
+$vt-color-warning: #f59e0b !default;
+$vt-color-error: #ef4444 !default;
+
+.Vue-Toastification {
+  &__toast {
+    &--default {
+      background-color: $vt-color-default !important;
+    }
+    &--info {
+      background-color: $vt-color-info !important;
+    }
+    &--success {
+      background-color: $vt-color-success !important;
+    }
+    &--warning {
+      background-color: $vt-color-warning !important;
+    }
+    &--error {
+      background-color: $vt-color-error !important;
+    }
+  }
+}
