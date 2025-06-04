@@ -112,6 +112,11 @@ watch(
           console.log("response-----------------", response)
           // console.log("RESPONSE", response);
 
+            if (props.userIdToLookFor) {
+              console.log("STO IN EVENTS DEL CALNDARIO", props.userIdToLookFor)
+              response = response.filter(item => item.user_id === props.userIdToLookFor);
+            }
+
           // Se l'utente è Admin, contiamo il numero di eventi per ogni giorno
           const eventsByDate = {};
 

@@ -150,10 +150,18 @@ export default {
       formStore.fill("add", url);
     };
 
-    const fetchData = (event) => {
+    const fetchData = async (event) => {
       console.log("la select chiama fetch data, vediamo event che emette", event)
-      filters.value = event;
+      // filters.value = event;
+      //       loadingStore.load();
       userIdToLookFor.value = event
+      //     const url = process.env.VUE_APP_API_URL + "/getAllPunches";
+      //     let urlWithParams = url + "?startDate=" + startDate.value + "&endDate=" + endDate.value + "&user_id=" + userIdToLookFor.value;
+
+      
+      //   let response = await apiStore.fetch(urlWithParams);
+      //   punches.value = response
+      //         loadingStore.stop();
     };
 
     watch([startDate, endDate], async ([newStart, newEnd]) => {
