@@ -1,13 +1,8 @@
 <template>
   <full-calendar :options="calendarOptions" :key="calendarKey" />
-  <!-- <campaign-modal
-    :url="campaignUrl"
-    :item="item"
-    @fetchData="refreshCalendar" /> -->
-     
 </template>
 <script>
-import { useApiStore } from "@/store/api";
+// import { useApiStore } from "@/store/api";
 import { useLoadingStore } from "@/store/loadings";
 import { useModalStore } from "@/store/modals";
 import { useAuthStore } from "@/store/auth";
@@ -24,13 +19,13 @@ export default {
 
     FullCalendar,
   },
-  props: ["userIdToLookFor"],
+  props: ["userIdToLookFor","startDate","endDate","punches"],
   setup(props) {
     const modalStore = useModalStore();
-    const apiStore = useApiStore();
+    // const apiStore = useApiStore();
     const loadingStore = useLoadingStore();
     const authStore = useAuthStore();
-    const url = process.env.VUE_APP_API_URL + "/getAllPunches"; // questa va bene per admin
+    // const url = process.env.VUE_APP_API_URL + "/getAllPunches"; // questa va bene per admin
     //serve url per staff che vede solo le proprie.
 
 
@@ -77,6 +72,14 @@ watch(
   }
 );
 
+watch(
+  () => props.punches,
+  (newVal, oldVal) => {
+    console.log("punches è cambiato", newVal, 'oldVal:', oldVal);
+    calendarKey.value += 1; // forza il rerender del componente FullCalendar
+  }
+);
+
     // questa è sostanzialmente confizurazione del calendario ---------------------------------------------------------------------------
     const calendarOptions = {
       locale: itLocale,
@@ -90,17 +93,23 @@ watch(
       },
 
       contentHeight: 600,
-      events: async (info) => {
-          loadingStore.load();
-          const { startStr, endStr } = info;
-          let urlWithParams = url + "?start=" + startStr + "&end=" + endStr;
+      events: async () => {
+          // loadingStore.load();
 
-          if (props.userIdToLookFor) {
-            urlWithParams += "&user_id=" + props.userIdToLookFor;
-          }
+          // // const { startStr, endStr } = info; questo info era un parametro di async di events poco sopra, mi dava info come primo e ultimo giorno che vedo nel calendario
+          // // let urlWithParams = url + "?start=" + startStr + "&end=" + endStr;
 
-          console.log("urlwithparams", urlWithParams)
-          let response = await apiStore.fetch(urlWithParams);
+          // let urlWithParams = url + "?startDate=" + props.startDate + "&endDate=" + props.endDate;
+
+          // if (props.userIdToLookFor) {
+          //   urlWithParams += "&user_id=" + props.userIdToLookFor;
+          // }
+
+          // console.log("urlwithparams", urlWithParams)
+          // let response = await apiStore.fetch(urlWithParams);
+          let response = props.punches
+
+          console.log("response-----------------", response)
           // console.log("RESPONSE", response);
 
           // Se l'utente è Admin, contiamo il numero di eventi per ogni giorno
