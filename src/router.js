@@ -106,6 +106,21 @@ const routes = [
       title: "Non autorizzato",
     },
   },
+  {
+  path: '/',
+  name: 'root-redirect',
+  beforeEnter: (to, from, next) => {
+    const authStore = useAuthStore();
+    if (authStore.isLoggedIn) {
+      next('/calendario');
+    } else {
+      next('/login');
+    }
+  },
+  meta: {
+    title: "Redirect"
+  }
+}
 ];
 
 const router = createRouter({
