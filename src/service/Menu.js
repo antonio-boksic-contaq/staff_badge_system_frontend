@@ -1,7 +1,7 @@
 const Menu = [
   {
     label: "Timbrature",
-    roles: ["Staff"],
+    roles: ["Staff","Admin"],
     data: [
       // {
       //   label: "Dashboard",
@@ -14,7 +14,7 @@ const Menu = [
         // icon: ["far", "user"],
         icon: ["fas", "clock"],
         to: "/home",
-        roles: ["Admin","Staff"],
+        roles: ["Staff"],
       },
       {
         label: "Calendario",
@@ -23,17 +23,23 @@ const Menu = [
         roles: ["Admin","Staff"],
       },
       {
-        label: "Staff Overview",
-        icon: ["fas", "magnifying-glass"],
-        // <font-awesome-icon :icon="['fas', 'magnifying-glass']" />
-        to: "/staff-overview",
+        label: "Timbrature Da Convalidare",
+        icon: ['far', 'circle-xmark'],
+        to: "/timbrature-da-convalidare",
         roles: ["Admin"],
       },
+      // {
+      //   label: "Staff Overview",
+      //   icon: ["fas", "magnifying-glass"],
+      //   // <font-awesome-icon :icon="['fas', 'magnifying-glass']" />
+      //   to: "/staff-overview",
+      //   roles: ["Admin"],
+      // },
 
     ],
   },
   {
-    label: "Profilo",
+    label: "Gestione Utenti",
     roles: ["Admin","Staff"],
     data: [
             {

@@ -92,12 +92,12 @@
                   <span>Aggiorna password</span>
                 </button>
               </li>
-              <li class="p-3 hover:bg-gray-100 rounded-2xl">
+              <!-- <li class="p-3 hover:bg-gray-100 rounded-2xl">
                 <a class="w-full h-full" :href="urlDocs" target="_blank">
                   <i class="pi pi-question-circle mr-3 text-2xl"></i>
                   <span>Documentazione</span>
                 </a>
-              </li>
+              </li> -->
               <li class="p-3 mb-3 hover:bg-gray-100 rounded-2xl">
                 <button
                   @click="authStore.logout"

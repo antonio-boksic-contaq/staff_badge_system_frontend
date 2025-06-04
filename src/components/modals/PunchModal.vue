@@ -1,8 +1,12 @@
 <template>
   <Modal size="modal-xl">
     <template #content>
-
-        <div v-if="authStore.user.role == 'Staff'">
+        <!-- overview per admin -->
+        <div v-if="authStore.user.role == 'Admin' && modalStore.item.extendedProps.AdminLookingForUser == 0 ">
+            <punch-table :rows="punches"></punch-table>
+        </div>
+        <!-- dettaglio singola timbratura, funziona sia per Admin sia per Staff -->
+        <div v-else class="text-center">
             <strong>ID TIMBRATURA:</strong> {{ modalStore.detailId }}
             <!-- {{ modalStore.item.title }} -->
             <div>
@@ -13,23 +17,27 @@
           hour12: false,
         }) }}
             </div>
-            <div>
-            <strong>USCITA:</strong> {{ new Date(modalStore.item.end).toLocaleTimeString([], {
-          hour: '2-digit',
-          minute: '2-digit',
-          second: '2-digit',
-          hour12: false,
-        }) }}
-            </div>
+             <div>
+    <strong>USCITA:</strong>
+    <span v-if="modalStore.item.end">
+      {{ new Date(modalStore.item.end).toLocaleTimeString([], {
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: false
+      }) }}
+    </span>
+    <span v-else> - </span>
+  </div>
 
             <div>
             <strong>NOTE:</strong> {{modalStore.item.extendedProps.notes}}
             </div>
        
         </div>
-        <div v-else>
-            <punch-table :rows="punches"></punch-table>
-        </div>
+
+    
+
       <!-- <user-form
         :url="url"
         v-if="formStore.formToShow === 'user'"

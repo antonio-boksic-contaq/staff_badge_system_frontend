@@ -15,32 +15,48 @@
     </div> -->
         </div>
 
+        <div class="text-2xl" v-if="user">
 
-        <div>
-            <strong>Email:</strong> {{ authStore.user.email }}
+  
+          <div >
+              <strong>Email:</strong> {{ user.email }}
+          </div>
+          <div>
+              <strong>Nome:</strong> {{ user.name }}
+          </div>
+          <div>
+              <strong>Cognome:</strong> {{ user.surname }}
+          </div>
+          <div>
+              <strong>Ruolo:</strong> {{ user.role }}
+          </div>
+
+          <div class="text-right">
+            <Button class="text-black mx-2 bg-blue-500 hover:bg-blue-700 border-black" @click="updateProfile">
+                Modifica
+            </Button>  
+          </div>
+
         </div>
-        <div>
-            <strong>Nome:</strong> {{ authStore.user.name }}
-        </div>
-        <div>
-            <strong>Cognome:</strong> {{ authStore.user.surname }}
-        </div>
-        <div>
-            <strong>Ruolo:</strong> {{ authStore.user.role }}
-        </div>
+        <!-- MODALE PER MODIFICA -->
+            <user-modal 
+            :url="url"
+            @fetchData="fetchData($event)"
+            @emptyTable="emptyRows"></user-modal>
   
     </template>
   </default-page>
 </template>
 
 <script>
-// import { useApiStore } from "@/store/api";
-// import { useModalStore } from "@/store/modals";
+import { useApiStore } from "@/store/api";
+import { useModalStore } from "@/store/modals";
 import { useAuthStore } from "@/store/auth";
-// import { useFormStore } from "@/store/forms";
+import { useFormStore } from "@/store/forms";
 // import { useLoadingStore } from "@/store/loadings";
 import { onBeforeMount, ref } from "vue";
 import DefaultPage from "@/components/layouts/DefaultPage.vue";
+import UserModal from "@/components/modals/UserModal";
 
 
 
@@ -48,25 +64,43 @@ export default {
   name: "SettingsView",
   components: {
     DefaultPage,
-
+    UserModal
 
   },
   setup() {
-    // const modalStore = useModalStore();
+    const modalStore = useModalStore();
     const authStore = useAuthStore();
-    // const formStore = useFormStore();
-    // const apiStore = useApiStore();
+    const formStore = useFormStore();
+    const apiStore = useApiStore();
     // const loadingStore = useLoadingStore();
     const usersOptions = ref([]);
     const customersOptions = ref([]);
     const filters = ref(null);
 
-    const users = ref([])
-    // const url = process.env.VUE_APP_API_URL + "/users";
+    const user = ref()
+    const url = process.env.VUE_APP_API_URL + "/users/" + authStore.user.id;
 
     onBeforeMount(async () => {
-
+      const response = await apiStore.fetch(url);
+      user.value = response
     });
+
+    const updateProfile = async () => {
+
+      formStore.data = user;
+      openModal()
+        
+    }
+
+    const openModal = () => {
+      modalStore.open("utente", "edit");
+      formStore.formToShow = "user";
+      modalStore.modalToShow = "user";
+      modalStore.size = "modal-xl";
+      formStore.fill("edit", url);
+    };
+
+
 
 
 
@@ -82,8 +116,9 @@ export default {
       filters,
       usersOptions,
     //   url,
-      users,
-      authStore
+      user,
+      authStore,
+      updateProfile
     };
   },
 };

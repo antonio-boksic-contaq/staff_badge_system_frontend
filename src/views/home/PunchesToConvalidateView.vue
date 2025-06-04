@@ -1,38 +1,12 @@
 <template>
-  <default-page icon="calendar">
-    <template #title>Calendario timbrature</template>
+  <default-page icon="circle-xmark">
+    <template #title>Timbrature Da Convalidare</template>
     <template #subtitle>
       <!-- Il calendario con tutti i colloqui fissati per i candidati. -->
     </template>
     <template #content>
-      <!-- NON MI SERVE DEFAULT ACTION PER CALENDARIO, ALMENO INIZIALMENTE -->
-      <!-- questo lo posso utilizzare sia per export che per vedere timbrature di un utente specifico -->
-      <div v-if="authStore.user.role == 'Admin'" class="card filters ">
-        <default-action>
-          <template #content>
-            <div class="grid grid-cols-2 mt-2 gap-7">
-              <div>
-                <select-filter
-                  label="Utente"
-                  text="complete_name"
-                  :selectedValue="[]"
-                  :options="usersOptions"
-                  field="user_id"
-                  @fetchData="fetchData($event)" />
-              </div>
-              <div>
-                <Button
-                  icon="pi pi-plus"
-                  class="p-button-rounded float-right p-button-primary p-button-text mt-12 mr-3"
-                  label="Aggiungi campagna"
-                  @click="openModal"> qua bottone export (da finire)</Button>
-              </div>
-            </div>
-          </template>
-        </default-action>
-      </div>
-      <campaign-calendar :userIdToLookFor="userIdToLookFor" />
-      <punch-modal></punch-modal>
+        
+            <punch-table :rows="punches" :notConvalidated="1"></punch-table>
     </template>
   </default-page>
 </template>
@@ -45,19 +19,16 @@ import { useAuthStore } from "@/store/auth";
 import { useLoadingStore } from "@/store/loadings";
 import { onBeforeMount, ref } from "vue";
 import DefaultPage from "@/components/layouts/DefaultPage.vue";
-import CampaignCalendar from "@/components/calendar/CampaignCalendar.vue";
-import DefaultAction from "@/components/layouts/DefaultAction.vue";
-import SelectFilter from "@/components/actions/SelectFilter.vue";
-import PunchModal from "@/components/modals/PunchModal";
+import PunchTable from "@/components/tables/PunchTable.vue";
+
 
 export default {
   name: "CalendarView",
   components: {
-    DefaultAction,
+
     DefaultPage,
-    CampaignCalendar,
-    SelectFilter,
-    PunchModal
+    PunchTable
+
   },
   setup() {
     const modalStore = useModalStore();
@@ -73,19 +44,21 @@ export default {
     const punches = ref([])
 
     // const url = process.env.VUE_APP_API_URL + "/campaigns";
-    const urlUsers = process.env.VUE_APP_API_URL + "/users?role=Staff";
+    //const urlUsers = process.env.VUE_APP_API_URL + "/users?role=Staff";
     // const urlCustomers = process.env.VUE_APP_API_URL + "/customers";
-    const url = process.env.VUE_APP_API_URL + "/getAllPunches";
+    const url = process.env.VUE_APP_API_URL + "/getAllPunches?not-convalidated=1";
 
-    onBeforeMount(async () => {
+    onBeforeMount( async () => {
       loadingStore.load();
+      console.log("sto montando componente view--------------------------")
 
       // console.log("sto dentro componente calendario, qua dovrò caricare badgiature")
       
-      usersOptions.value = await apiStore.fetch(urlUsers);
+      //usersOptions.value = await apiStore.fetch(urlUsers);
       //customersOptions.value = await apiStore.fetch(urlCustomers);
 
       punches.value = await apiStore.fetch(url)
+      console.log("response not convalidated punches", punches.value)
       loadingStore.stop();
     });
 

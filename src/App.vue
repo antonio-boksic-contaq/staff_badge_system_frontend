@@ -51,7 +51,7 @@ export default {
     const settingStore = useSettingStore();
 
     onBeforeMount(() => {
-      console.log("menu", menu)
+      // console.log("menu", menu)
       document.documentElement.style.fontSize = settingStore.fontSize + "px";
       if (settingStore.darkMode)
         document.querySelector("html").setAttribute("theme", "dark");

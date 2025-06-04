@@ -94,5 +94,15 @@ export const useAuthStore = defineStore("auth", {
         });
       this.isLoading = false;
     },
+    async refreshUser() {
+      const url = process.env.VUE_APP_API_URL + "/auth/user";
+      const headers = {
+        headers: {
+          Authorization: "Bearer " + this.accessToken,
+        },
+      };
+    const user = await axios.get(url, headers);
+    this.user = user.data;
+    }
   },
 });

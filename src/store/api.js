@@ -17,9 +17,9 @@ export const useApiStore = defineStore("api", {
   },
   actions: {
     async fetch(url, request = null) {
-      console.log("sono nella fetch")
+      // console.log("sono nella fetch")
       const items = await get(authStore.accessToken, url, request);
-      console.log("items",items)
+      // console.log("items",items)
       return items.data;
     },
     async export(url, filename) {

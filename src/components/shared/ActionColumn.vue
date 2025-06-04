@@ -64,6 +64,17 @@
       v-tooltip.top="'Cancella'"
       @mouseover="changeTooltipColor('danger')"
       @click="deleteItem(props, itemTitle)"></Button>
+
+          <Button
+      v-if="
+        actions.includes('calendarForUser') &&
+       authStore.user.role === 'Admin'
+      "
+      icon="pi pi-search"
+      class="p-button-rounded p-button-info p-button-text mr-2 mb-2"
+      v-tooltip.top="'Vedi presenze utente'"
+      @mouseover="changeTooltipColor('info')"
+      @click="CalendarForUser(props, itemTitle)"></Button>
   </div>
 </template>
 <script>
@@ -121,12 +132,31 @@ export default {
     };
 
     const detailItem = (rowItem, itemText, modalToShow) => {
+      console.log("cliccato console log", rowItem, itemText, modalToShow)
       const itemValue = itemText !== null ? itemText : rowItem.row[props.field];
+      console.log("itemValue", itemValue)
       modalStore.detailId = rowItem.row.id;
       formStore.formToShow = null;
       modalStore.modalToShow = modalToShow;
       modalStore.open(itemValue, "detail");
     };
+
+      const CalendarForUser = (rowItem, itemText) => {
+      const itemValue = itemText !== null ? itemText : rowItem.row[props.field];
+      modalStore.detailId = rowItem.row.id;
+      formStore.formToShow = "calendarForUser";
+      modalStore.modalToShow = "user";
+      modalStore.open(itemValue, "detail");
+      // console.log("MI DEVE DARE CALENDARIO PER UTENTEI")
+    };
+
+    //   const openModal = () => {
+    //   modalStore.open("utente", "add");
+    //   formStore.formToShow = "user";
+    //   modalStore.modalToShow = "user";
+    //   modalStore.size = "modal-xl";
+    //   formStore.fill("add", url);
+    // };
 
     return {
       authStore,
@@ -136,6 +166,7 @@ export default {
       deleteItem,
       itemTitle,
       restoreItem,
+      CalendarForUser
     };
   },
 };

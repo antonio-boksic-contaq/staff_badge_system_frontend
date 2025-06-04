@@ -172,6 +172,7 @@ export default {
       if (formStore.action === "store")
         await apiStore.store(formStore.route, formStore.id + "User");
       if (formStore.action === "update") {
+        console.log("UPDATE FINO A QUA NEL FORM ARRIVA SECONDO ME ERRORE è SUBITO DOPO")
         await apiStore.update(formStore.route, formStore.id + "User");
       }
       if (apiStore.success === true) {

@@ -6,12 +6,16 @@
         v-if="formStore.formToShow === 'user'"
         @emptyTable="emptyTable"
         @fetchData="fetchData($event)" />
-    </template>
+      <div v-if="formStore.formToShow === 'calendarForUser'">
+        <campaign-calendar></campaign-calendar>
+      </div>
+      </template>
   </Modal>
 </template>
 <script>
 import Modal from "@/components/shared/Modal.vue";
 import UserForm from "@/components/forms/UserForm.vue";
+import CampaignCalendar from "@/components/calendar/CampaignCalendar.vue";
 import { useFormStore } from "@/store/forms";
 import { onMounted} from "vue";
 
@@ -22,6 +26,7 @@ export default {
   components: {
     UserForm,
     Modal,
+    CampaignCalendar
   },
   setup(props, context) {
     const formStore = useFormStore();

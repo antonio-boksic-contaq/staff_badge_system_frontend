@@ -46,16 +46,16 @@ const routes = [
       title: "Calendario",
     },
   },
-    {
-    path: "/staff-overview",
-    name: "staff-overview",
-    component: () => import("@/views/home/StaffOverviewView.vue"),
-    meta: {
-      authRequired: true,
-      roles: ["Admin"],
-      title: "Staff Overview",
-    },
-  },
+  //   {
+  //   path: "/staff-overview",
+  //   name: "staff-overview",
+  //   component: () => import("@/views/home/StaffOverviewView.vue"),
+  //   meta: {
+  //     authRequired: true,
+  //     roles: ["Admin"],
+  //     title: "Staff Overview",
+  //   },
+  // },
   {
     path: "/utenti",
     name: "utenti",
@@ -64,6 +64,16 @@ const routes = [
       authRequired: true,
       roles: ["Admin"],
       title: "Utenti",
+    },
+  },
+    {
+    path: "/timbrature-da-convalidare",
+    name: "timbrature-da-convalidare",
+    component: () => import("@/views/home/PunchesToConvalidateView.vue"),
+    meta: {
+      authRequired: true,
+      roles: ["Admin"],
+      title: "Timbrature Da Convalidare",
     },
   },
     {

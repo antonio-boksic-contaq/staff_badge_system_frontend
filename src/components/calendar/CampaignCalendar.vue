@@ -4,27 +4,27 @@
     :url="campaignUrl"
     :item="item"
     @fetchData="refreshCalendar" /> -->
-     <punch-modal/>
+     
 </template>
 <script>
 import { useApiStore } from "@/store/api";
 import { useLoadingStore } from "@/store/loadings";
 import { useModalStore } from "@/store/modals";
 import { useAuthStore } from "@/store/auth";
-import { ref, watch } from "vue";
+import { ref, watch, onBeforeMount } from "vue";
 import FullCalendar from "@fullcalendar/vue3"; // questo è un componente di vue
 import dayGridPlugin from "@fullcalendar/daygrid"; // questo è un componente di vue
 import timeGridPlugin from "@fullcalendar/timegrid"; // questo è un componente di vue
 import itLocale from "@fullcalendar/core/locales/it";
 import interactionPlugin from "@fullcalendar/interaction";
-import PunchModal from "@/components/modals/PunchModal";
+
 
 export default {
   components: {
-    PunchModal,
+
     FullCalendar,
   },
-  props: ["filters"],
+  props: ["userIdToLookFor"],
   setup(props) {
     const modalStore = useModalStore();
     const apiStore = useApiStore();
@@ -40,6 +40,11 @@ export default {
     const item = ref(null);
     const calendarKey = ref(0);
 
+    onBeforeMount(()=> {
+      // console.log("STO MONTANDO TABELLA CAMPAIGN CALENDAR")
+    })
+
+    // questa è la funzione che viene chiamata sul click di un elemento nel calendario
     const itemAction = async (el) => {
       console.log("cliccato casella del calendario")
       loadingStore.load();
@@ -51,7 +56,10 @@ export default {
       // fino a qua va bene
       modalStore.open("", "detail");
       modalStore.icon = "pi-search";
-      const initialTitle = authStore.user.role === "Staff" ? "Dettaglio Timbratura " : "Dettaglio Timbrature "
+
+      const initialTitle = authStore.user.role === "Staff" ? "Dettaglio Timbratura " : 
+      modalStore.item.extendedProps.AdminLookingForUser == 0 ? "Dettaglio Timbrature " : "Dettaglio Timbratura " + el.event.title + " "
+
       modalStore.title = initialTitle + el.event.start.toLocaleDateString('it-IT', { day: '2-digit', month: '2-digit' });
       modalStore.modalToShow = "item detail";
       loadingStore.stop();
@@ -61,10 +69,13 @@ export default {
       calendarKey.value += 1;
     };
 
-    watch(
-      () => props.filters,
-      () => (calendarKey.value += 1)
-    );
+watch(
+  () => props.userIdToLookFor,
+  (newVal, oldVal) => {
+    console.log("userIdToLookFor è cambiato", newVal, 'oldVal:', oldVal);
+    calendarKey.value += 1; // forza il rerender del componente FullCalendar
+  }
+);
 
     // questa è sostanzialmente confizurazione del calendario ---------------------------------------------------------------------------
     const calendarOptions = {
@@ -80,11 +91,17 @@ export default {
 
       contentHeight: 600,
       events: async (info) => {
+          loadingStore.load();
           const { startStr, endStr } = info;
           let urlWithParams = url + "?start=" + startStr + "&end=" + endStr;
 
+          if (props.userIdToLookFor) {
+            urlWithParams += "&user_id=" + props.userIdToLookFor;
+          }
+
+          console.log("urlwithparams", urlWithParams)
           let response = await apiStore.fetch(urlWithParams);
-          console.log("RESPONSE", response);
+          // console.log("RESPONSE", response);
 
           // Se l'utente è Admin, contiamo il numero di eventi per ogni giorno
           const eventsByDate = {};
@@ -103,7 +120,7 @@ export default {
           // Restituisci gli eventi, aggiungendo il numero di eventi per ogni giorno
           const arraytoreturn = response.map((item) => ({
             id: item.id,
-            title: item.name + " " + item.surname, 
+            title: item.surname + " " + item.name, 
             start: item.check_in,
             end: item.check_out,
             extendedProps: {
@@ -111,12 +128,14 @@ export default {
               userId: item.user_id,
               eventDate: new Date(item.check_in).toLocaleDateString(), // Aggiungiamo la data dell'evento
               eventsCount: eventsByDate?.length || 0, // Numero di eventi per quella data
+              AdminLookingForUser: props.userIdToLookFor ? 1 : 0
             },
           }));
 
           console.log("arraytoreturn", arraytoreturn)
-
+          loadingStore.stop();
           return arraytoreturn
+          
         },      
 eventContent: function (arg) {
   const start = new Date(arg.event.start).toLocaleTimeString([], {
@@ -159,16 +178,16 @@ eventContent: function (arg) {
 
   const customEl = document.createElement("div");
 
-  if (authStore.user.role === 'Admin') {
+  if (authStore.user.role === 'Admin' && !props.userIdToLookFor ) {
     if (!isFirstOfDay) return null;
 
     customEl.innerHTML = `
       <div class="p-1">
         <span class="block text-2xl text-black whitespace-normal break-words">
-          Utenti che hanno fatto check-in: ${checkInCount}
+          Risorse entrate: ${checkInCount}
         </span>
         <span class="block text-2xl text-black whitespace-normal break-words">
-          Utenti che hanno fatto check-out: ${checkOutCount}
+          Risorse uscite: ${checkOutCount}
         </span>
       </div>
     `;
@@ -182,7 +201,37 @@ eventContent: function (arg) {
   }
 
   return { domNodes: [customEl] };
+},
+eventDidMount: function(info) {
+  const el = info.el;
+  const event = info.event;
+
+  // Solo se admin e non sta cercando uno user specifico
+  if (authStore.user.role === 'Admin' && !props.userIdToLookFor) {
+    const calendar = info.view.calendar;
+    const allEvents = calendar.getEvents();
+
+    // Format: YYYY-MM-DD (senza orario)
+    const currentDate = event.start.toISOString().split('T')[0];
+
+    const eventsOnSameDay = allEvents.filter(e => {
+      return e.start.toISOString().split('T')[0] === currentDate;
+    });
+
+    // Ordina per orario di inizio
+    eventsOnSameDay.sort((a, b) => a.start - b.start);
+
+    const isFirstOfDay = eventsOnSameDay[0].id === event.id;
+
+    if (!isFirstOfDay) {
+      el.style.visibility = 'hidden';
+el.style.height = '0px';
+el.style.padding = '0';
+el.style.margin = '0';
+    }
+  }
 }
+
 
     };
 
@@ -196,3 +245,25 @@ eventContent: function (arg) {
   },
 };
 </script>
+
+<style>
+
+.fc-day-today {
+  background-color: #e0f3ff !important;
+  border: 2px solid #007bff73 !important;
+  border-radius: 6px;
+}
+
+/* Cambia colore del numero del giorno */
+.fc-day-today .fc-daygrid-day-number {
+  color: #007BFF !important;
+  font-weight: bold;
+}
+
+.fc-daygrid-event-harness {
+  visibility: "hidden";
+  margin: 0 !important;
+  padding: 0 !important;
+  height: 0 !important;
+}
+</style>

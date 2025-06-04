@@ -56,7 +56,7 @@ export default {
   setup(props, context) {
     const apiStore = useApiStore();
     const confirmStore = useConfirmStore();
-    const actions = ["update", "delete", "restore","detail-modal"];
+    const actions = [ "delete", "restore","calendarForUser", "update"];
     const emptyTable = () => {
       context.emit("emptyTable", true);
     };
