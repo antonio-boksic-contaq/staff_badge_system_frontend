@@ -32,7 +32,7 @@
 
     <div class="bottoni">
       <Button class="text-black mx-2 bg-green-500 hover:bg-green-700 border-black" @click="checkIn" >Check-in</Button>
-      <Button class="text-black mx-2 bg-red-500 hover:bg-red-700 border-black" @click="checkOut">Check-out</Button>
+      <Button class="text-black mx-2 bg-red-500 hover:bg-red-700 border-black" @click="checkOut(false)">Check-out</Button>
     </div>
   </div>
 
@@ -116,7 +116,16 @@ export default {
     });
 
 const isLastCheckOutControlSuccesful = computed(() => {
-  return authStore.user.date_of_last_checkin === authStore.user.date_of_last_checkout ? 1 : 0;
+   const today = new Date().toISOString().split('T')[0];
+   const lastCheckIn = authStore.user.date_of_last_checkin;
+   const lastCheckOut = authStore.user.date_of_last_checkout;
+
+    console.log("today", today)
+    console.log("lastCheckIn", lastCheckIn)
+    console.log("lastCheckOut", lastCheckOut)
+
+   return today === lastCheckIn ? 1 : authStore.user.date_of_last_checkin === authStore.user.date_of_last_checkout ? 1 : 0;
+   
 });
 
     const getTimeLogs = async () => {
@@ -142,7 +151,7 @@ const isLastCheckOutControlSuccesful = computed(() => {
       },
     });
 
-    const checkOut = async (forPreviousDate = false) => {
+    const checkOut = async (forPreviousDate) => {
         loadingStore.load();
         if (!forPreviousDate) {
           await apiStore.store(
