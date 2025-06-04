@@ -42,7 +42,7 @@
           <div>
             <div class="flex items-center justify-end">
               <div class="text-xl mb-6">
-                <router-link to="/" class="text-red"
+                <router-link to="/login" class="text-red"
                   >Torna al login</router-link
                 >
               </div>
