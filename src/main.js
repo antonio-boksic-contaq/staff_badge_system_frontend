@@ -1,3 +1,4 @@
+import './echo';
 import "primevue/resources/primevue.min.css";
 import "primeflex/primeflex.css";
 import "primeicons/primeicons.css";

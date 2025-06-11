@@ -14,6 +14,7 @@ export const useAuthStore = defineStore("auth", {
       isLoading: null,
       accessToken: null,
       recoverySuccess: null,
+      showPopupJustAfterLogin: false
     };
   },
   persist: true,
@@ -38,6 +39,7 @@ export const useAuthStore = defineStore("auth", {
             this.isLoggedIn = true;
             this.user = user.data;
             this.isLoading = false;
+            this.showPopupJustAfterLogin = true
             if (user.data.role === "Supervisor")
               router.push("contratti-in-scadenza");
             else router.push("calendario");

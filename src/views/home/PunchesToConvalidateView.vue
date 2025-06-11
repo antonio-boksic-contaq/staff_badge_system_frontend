@@ -60,6 +60,7 @@ export default {
       punches.value = await apiStore.fetch(url)
       console.log("response not convalidated punches", punches.value)
       loadingStore.stop();
+      apiStore.isLoading = false
     });
 
     const openModal = () => {

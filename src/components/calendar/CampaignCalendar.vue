@@ -109,7 +109,7 @@ watch(
           // let response = await apiStore.fetch(urlWithParams);
           let response = props.punches
 
-          console.log("response-----------------", response)
+          // console.log("response-----------------", response)
           // console.log("RESPONSE", response);
 
             if (props.userIdToLookFor) {
@@ -129,7 +129,7 @@ watch(
             eventsByDate[eventDate].push(item);
           });
 
-          console.log("EVENTSBYDATE",eventsByDate)
+          // console.log("EVENTSBYDATE",eventsByDate)
 
           // Restituisci gli eventi, aggiungendo il numero di eventi per ogni giorno
           const arraytoreturn = response.map((item) => ({
@@ -146,7 +146,7 @@ watch(
             },
           }));
 
-          console.log("arraytoreturn", arraytoreturn)
+          // console.log("arraytoreturn", arraytoreturn)
           loadingStore.stop();
           return arraytoreturn
           
