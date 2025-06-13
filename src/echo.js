@@ -12,5 +12,6 @@ window.Echo = new Echo({
     wssPort: 8082,
     forceTLS: false,
     disableStats: true,
-    enabledTransports: ['ws', 'wss'],
+    enabledTransports: ['ws' ,'wss'],
+    path: '/ws'
 });
